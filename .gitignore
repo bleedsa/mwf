@@ -1,0 +1,7 @@
+/o
+/.ninja_log
+/vgcore.*
+/build.ninja
+/3rd/enet/o/
+/3rd/raylib/build
+/3rd/msgpack-c/build

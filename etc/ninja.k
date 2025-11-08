@@ -1,0 +1,87 @@
+#!/usr/bin/env k
+
+/ utils
+has:{~0N~y?x}
+
+/ filters
+ext:{x~|#[x]#|y} / y has ext x?
+cpp:ext".cpp"
+srcs:{[fil;dir](dir,"/",)'d@&fil'd:0:dir}
+libcpp:srcs[cpp;"lib"]
+srccpp:srcs[cpp;"src"]
+win:srcs[cpp;"src/win"]
+
+/ config
+A:has[;`argv[]]
+rel:A["--release"]|A"--rel"
+cfg:!/+((`name;"mwf")
+        (`rel;rel)
+        (`cc; "clang")
+        (`cxx;"clang++"))
+cfg,:(!).,'(`cflags;    " "/($[~cfg`rel;"-g -DDBG=1";""]
+                             "-Wall -Wextra -Wno-unused-parameter"
+                             "-Wno-unused-variable -Wno-unused-function"
+                             "-Wno-enum-enum-conversion"
+                             "-I3rd/raylib/include/ -I3rd/enet/o/include"))
+cfg,:(!).,'(`cxxflags;  " "/(cfg`cflags
+                             "-Iinc -I3rd/msgpack/include"
+                             "-Wno-c99-designator"
+                             "-fPIE -std=c++26"))
+cfg,:(!).,'(`lnkxxflags;" "/(cfg`cxxflags;""))
+
+/ ninja
+rule:{[n;c]$[`m~@c;[(cmd;dep):(c@)'`cmd`dep / deconstruct
+                    "rule ",n,"\n command = ",cmd,"\n depfile = ",dep]
+             "rule ",n,"\n command = ",c]}
+bld:{[R;out;in]"build ",out,": ",R," "," "/in}
+cc:bld"cc"
+cxx:bld"cxx"
+lnk:bld"lnkxx"
+
+/ files
+outof:{"o/",x}
+(exeof;objof):{outof y,".",x}@'("exe";"o")
+libof:{outof "lib/",y,".",x}@"a"
+srcof:{outof "src/",x}
+bldcxx:{cxx[objof x;,x]}
+
+outd:,[`dep]!,"$out.d"
+
+RAY:"3rd/raylib/build/raylib/libraylib.a"
+
+/ flags
+`0:"cc = ",cfg`cc
+`0:"cxx = ",cfg`cxx
+`0:"cflags = ",cfg`cflags
+`0:"cxxflags = ",cfg`cxxflags
+`0:"lnkflags = ",cfg`lnkxxflags
+
+/ your basic rules
+`0:rule["exe";"$in"]
+`0:rule["cxx";outd,(!).,'(`cmd;" "/("$cxx -c $cxxflags -MD -MF $out.d"
+                                    "-o $out $in"))]
+`0:rule["lnkxx";outd,(!).,'(`cmd;" "/("$cxx $lnkflags $cxxflags -MD -MF $out.d"
+                                      "-o $out $in"))]
+`0:rule["ar";"ar rcs $out $in"]
+
+/ 3rd
+`0:rule["ray";"etc/mk/ray.sh"]
+`0:bld["ray";RAY;""]
+`0:rule["enet";"etc/mk/enet.sh"]
+`0:bld["enet";ENET:"3rd/enet/o/lib64/libenet.a";""]
+
+/ phony
+`0:rule["run";"$in"]
+`0:bld["run";"run";,exeof"trhs"]
+
+/ objs
+`0:"\n"/bldcxx'libcpp
+`0:"\n"/bldcxx'win
+`0:"\n"/bldcxx'srccpp
+
+/ out
+libout:libof cfg`name
+`0:bld["ar";libout;objof'libcpp]
+`0:lnk[exeof cfg`name;(" "/objof'win;objof"src/0.cpp";libout;ENET;RAY)]
+`0:lnk[srv:exeof ,[cfg`name;"srv"];(objof"src/srv.cpp";libout;ENET;RAY)]
+`0:"default "," "/(RAY;libout;exeof cfg`name;srv);

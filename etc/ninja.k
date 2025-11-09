@@ -26,7 +26,7 @@ cfg,:(!).,'(`cflags;    " "/($[~cfg`rel;"-g -DDBG=1";""]
 cfg,:(!).,'(`cxxflags;  " "/(cfg`cflags
                              "-Iinc -I3rd/msgpack/include"
                              "-Wno-c99-designator"
-                             "-std=c++26"))
+                             "-std=gnu++2b"))
 cfg,:(!).,'(`lnkxxflags;" "/(cfg`cxxflags;""))
 
 / ninja
@@ -47,7 +47,6 @@ bldcxx:{cxx[objof x;,x]}
 
 outd:,[`dep]!,"$out.d"
 
-RAY:"3rd/raylib/build/raylib/libraylib.a"
 
 / flags
 `0:"cc = ",cfg`cc
@@ -66,9 +65,9 @@ RAY:"3rd/raylib/build/raylib/libraylib.a"
 
 / 3rd
 `0:rule["ray";"etc/mk/ray.sh"]
-`0:bld["ray";RAY;""]
+`0:bld["ray";RAY:"3rd/raylib/build/raylib/libraylib.a";""]
 `0:rule["enet";"etc/mk/enet.sh"]
-`0:bld["enet";ENET:"o/lib64/libenet.a";""]
+`0:bld["enet";ENET:"o/lib/libenet.a";""]
 
 / phony
 `0:rule["run";"$in"]

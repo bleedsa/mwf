@@ -13,5 +13,5 @@ X gfx::init(CC *n) -> I {
 }
 
 X gfx::close() -> V {
-	CloseWindow();
+	// CloseWindow();
 }

@@ -25,6 +25,17 @@ X main(I argc, C **argv) -> I {
 				log("%s disconnected.", (C*)ev.peer->data);
 				ev.peer->data = nullptr;
 				break;
+
+			case ENET_EVENT_TYPE_RECEIVE:
+				log(
+					"packet {L:%zu,D:%s,from:%s,chan:%u}",
+					ev.packet->dataLength,
+					(C*)ev.packet->data,
+					(C*)ev.peer->data,
+					ev.channelID
+				);
+				enet_packet_destroy(ev.packet);
+				break;
 			}
 		}
 	}

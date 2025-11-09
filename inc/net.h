@@ -23,6 +23,13 @@ namespace Net {
 
 		Cli(C *addr, I port);
 		~Cli();
+
+		/* send a packet with data D and length L */
+		inl X send_packet(u8 *D, S L) -> V {
+			ENetPacket *p = enet_packet_create(D, L, ENET_PACKET_FLAG_RELIABLE);
+			enet_peer_send(peer, 0, p);
+			enet_host_flush(cli);
+		}
 	};
 }
 

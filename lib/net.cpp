@@ -56,4 +56,6 @@ Net::Cli::Cli(C *a, I p) {
 
 Net::Cli::~Cli() {
 	enet_host_destroy(cli);
+	enet_peer_disconnect(peer, 0);
+	enet_peer_reset(peer);
 }

@@ -4,6 +4,12 @@
 #include <io.h>
 #include <string.h>
 
+sta S CLI_ID = 0;
+
+inl X new_cli_id() -> S {
+	return CLI_ID++;
+}
+
 X Net::init() -> I {
 	if (I e = enet_initialize() != 0) {
 		elog("failed to initialize enet.");

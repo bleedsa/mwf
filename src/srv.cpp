@@ -15,7 +15,7 @@ X main(I argc, C **argv) -> I {
 
 			case ENET_EVENT_TYPE_CONNECT:
 				log(
-					"new client from %x:%u\n",
+					"new client from %x:%u",
 					ev.peer->address.host,
 					ev.peer->address.port
 				   );
@@ -27,6 +27,7 @@ X main(I argc, C **argv) -> I {
 				break;
 
 			case ENET_EVENT_TYPE_RECEIVE:
+				X msg = "hello world";
 				log(
 					"packet {L:%zu,D:%s,from:%s,chan:%u}",
 					ev.packet->dataLength,
@@ -35,6 +36,7 @@ X main(I argc, C **argv) -> I {
 					ev.channelID
 				);
 				enet_packet_destroy(ev.packet);
+				srv.send_packet(ev.peer, (u8*)msg, strlen(msg)+1);
 				break;
 			}
 		}

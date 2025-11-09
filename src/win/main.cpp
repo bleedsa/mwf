@@ -4,6 +4,6 @@
 #include "win.h"
 
 X win::main() -> I {
-	ClearBackground(BLACK);
+	ClearBackground(WHITE);
 	return 0;
 }

@@ -9,7 +9,9 @@ I main(I argc, C **argv) {
 
 	X cli = Net::Cli(argv[1], 6061);
 
+	/*
 	gfx::window(win::this_win);
 	gfx::close();
+	*/
 	return 0;
 }

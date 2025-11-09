@@ -16,12 +16,12 @@ namespace Net {
 	};
 
 	struct Cli {
+		ENetHost *cli;
 		ENetAddress addr;
 		ENetEvent ev;
-		ENetHost *cli;
 		ENetPeer *peer;
 
-		Cli(CC *addr, I port);
+		Cli(C *addr, I port);
 		~Cli();
 	};
 }

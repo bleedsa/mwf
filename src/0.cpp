@@ -4,7 +4,10 @@
 #include <gfx.h>
 #include <ctrl.h>
 #include <net.h>
+#include <map.h>
 #include "win/win.h"
+
+Map::Map MAP(200, 200);
 
 I main(I argc, C **argv) {
 	ENetEvent ev;

@@ -19,7 +19,29 @@ namespace M {
 		{
 			*ref = 1;
 		}
-		~M();
+		~M() {
+			*ref -= 1;
+			if (rows != 0 && cols != 0 && !(*ref > 0)) {
+				delete[] ptr;
+				delete ref;
+			}
+		}
+
+		/* boilerplate rc stuff */
+		inl M(con M &x)
+			: rows{x.rows}, cols{x.cols}, ptr{x.ptr}, ref{x.ref}
+		{
+			*ref += 1;
+		}
+		inl M(con M &&x)
+			: rows{x.rows}, cols{x.cols}, ptr{x.ptr}, ref{x.ref}
+		{
+			*ref += 1;
+		}
+		inl X operator=(con M &x) -> con M& {
+			rows = x.rows, cols = x.cols, ptr = x.ptr, ref = x.ref;
+			*ref += 1;
+		}
 
 		inl X at(S x, S y) -> T* {
 			X i = x + cols * y;

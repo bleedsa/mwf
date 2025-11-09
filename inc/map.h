@@ -6,7 +6,7 @@
 #include <item.h>
 #include <vector>
 
-namespace map {
+namespace Map {
 	/* the type of a tile */
 	enum TileTy {
 		EMPTY,
@@ -17,6 +17,7 @@ namespace map {
 	struct Tile {
 		TileTy ty;
 
+		inl Tile() : ty{EMPTY} {}
 		inl Tile(TileTy ty) : ty{ty} {}
 	};
 
@@ -24,6 +25,12 @@ namespace map {
 	struct Map {
 		M::M<Tile> tiles;
 		std::vector<Item> items;
+
+		Map(S x, S y);
+		inl ~Map() {}
+		inl X at(S x, S y) -> Tile* {
+			return tiles.at(x, y);
+		}
 	};
 }
 

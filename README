@@ -1,1 +1,5 @@
 MOB WITH FRIENDS
+
+% for f in etc/mk/*; do $f; done
+% etc/ninja.k>build.ninja
+% ninja

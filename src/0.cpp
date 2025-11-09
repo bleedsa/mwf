@@ -20,7 +20,7 @@ I main(I argc, C **argv) {
 	X p = cli.recv_packet();
 	if (p.has_value()) {
 		X [L, D] = p.value();
-		for (S i = 0; i < L; i++) putc(D[i], stdout);
+		log("[%zu] %s", L, D);
 	}
 
 	gfx::window(win::this_win);

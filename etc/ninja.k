@@ -1,4 +1,4 @@
-#!/usr/bin/env k
+#!/usr/bin/env -S rlwrap etc/k.com
 
 / utils
 has:{~0N~y?x}

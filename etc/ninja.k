@@ -22,11 +22,11 @@ cfg,:(!).,'(`cflags;    " "/($[~cfg`rel;"-g -DDBG=1";""]
                              "-Wall -Wextra -Wno-unused-parameter"
                              "-Wno-unused-variable -Wno-unused-function"
                              "-Wno-enum-enum-conversion"
-                             "-I3rd/raylib/include/ -I3rd/enet/o/include"))
+                             "-I3rd/raylib/include/ -Io/include"))
 cfg,:(!).,'(`cxxflags;  " "/(cfg`cflags
                              "-Iinc -I3rd/msgpack/include"
                              "-Wno-c99-designator"
-                             "-fPIE -std=c++26"))
+                             "-std=c++26"))
 cfg,:(!).,'(`lnkxxflags;" "/(cfg`cxxflags;""))
 
 / ninja
@@ -68,7 +68,7 @@ RAY:"3rd/raylib/build/raylib/libraylib.a"
 `0:rule["ray";"etc/mk/ray.sh"]
 `0:bld["ray";RAY;""]
 `0:rule["enet";"etc/mk/enet.sh"]
-`0:bld["enet";ENET:"3rd/enet/o/lib64/libenet.a";""]
+`0:bld["enet";ENET:"o/lib64/libenet.a";""]
 
 / phony
 `0:rule["run";"$in"]

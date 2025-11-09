@@ -1,5 +1,6 @@
 MOB WITH FRIENDS
 
+% git submodule init && git submodule update
 % for f in etc/mk/*; do $f; done
 % etc/ninja.k>build.ninja
 % ninja

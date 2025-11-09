@@ -1,0 +1,3 @@
+[submodule "3rd/enet"]
+	path = 3rd/enet
+	url = https://github.com/lsalzman/enet

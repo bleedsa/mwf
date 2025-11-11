@@ -10,8 +10,8 @@
 #define mv(x...)(std::move(x))
 #define MMV(x,y,z)(memmove(x,y,z))
 #define streq(x,y)(0==strcmp((x),(y)))
-#define fatal(f...){fprintf(stderr,f);putc('\n',stdout);exit(-1);}
-#define log(f...){printf("[LOG] " f);putc('\n',stdout);}
+#define fatal(f...){fprintf(stderr,"[FATAL] " f);putc('\n',stdout);exit(-1);}
+#define log_(f...){printf("[LOG] " f);putc('\n',stdout);}
 
 /* llvm */
 using u8=uint8_t;

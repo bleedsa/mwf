@@ -1,10 +1,12 @@
 #ifndef __MWF_MAP_H__
 #define __MWF_MAP_H__
 
+#include <msgpack.hpp>
+#include <vector>
+
 #include <u.h>
 #include <M.h>
 #include <item.h>
-#include <vector>
 
 namespace Map {
 	/* the type of a tile */
@@ -19,6 +21,8 @@ namespace Map {
 
 		inl Tile() : ty{EMPTY} {}
 		inl Tile(TileTy ty) : ty{ty} {}
+
+		msgpack::sbuffer pack();
 	};
 
 	/* a game map */

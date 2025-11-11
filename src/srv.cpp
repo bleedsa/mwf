@@ -14,7 +14,7 @@ X main(I argc, C **argv) -> I {
 				continue;
 
 			case ENET_EVENT_TYPE_CONNECT:
-				log(
+				log_(
 					"new client from %x:%u",
 					ev.peer->address.host,
 					ev.peer->address.port
@@ -22,13 +22,13 @@ X main(I argc, C **argv) -> I {
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
-				log("%s disconnected.", (C*)ev.peer->data);
+				log_("%s disconnected.", (C*)ev.peer->data);
 				ev.peer->data = nullptr;
 				break;
 
 			case ENET_EVENT_TYPE_RECEIVE:
 				X msg = "hello world";
-				log(
+				log_(
 					"packet {L:%zu,D:%s,from:%s,chan:%u}",
 					ev.packet->dataLength,
 					(C*)ev.packet->data,

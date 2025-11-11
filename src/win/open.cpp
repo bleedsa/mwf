@@ -4,7 +4,7 @@
 
 X win::open() -> I {
 	ClearBackground(RAYWHITE);
-	log("win::open()");
+	log_("win::open()");
 	win::WIN_T = WIN_MAIN;
 	return 0;
 }

@@ -23,7 +23,7 @@ I main(I argc, C **argv) {
 	X p = cli.recv_packet();
 	if (p.has_value()) {
 		X [L, D] = p.value();
-		log("[%zu] %s", L, D);
+		log_("[%zu] %s", L, D);
 	}
 
 	gfx::window(win::this_win);

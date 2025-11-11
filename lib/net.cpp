@@ -53,7 +53,7 @@ Net::Cli::Cli(C *a, I p) {
 		enet_host_service(cli, &e, 5000) > 0
 		&& e.type == ENET_EVENT_TYPE_CONNECT
 	) {
-		log("connection to %s:%d succeeded", a, p);
+		log_("connection to %s:%d succeeded", a, p);
 	} else {
 		enet_peer_reset(peer);
 		elog("failed to connect to %s:%d", a, p);

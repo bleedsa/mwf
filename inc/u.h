@@ -12,6 +12,7 @@
 #define streq(x,y)(0==strcmp((x),(y)))
 #define fatal(f...){fprintf(stderr,"[FATAL] " f);putc('\n',stdout);exit(-1);}
 #define log_(f...){printf("[LOG] " f);putc('\n',stdout);}
+#define elog(f...){fprintf(stderr, "[ERR] " f);putc('\n',stdout);}
 
 /* llvm */
 using u8=uint8_t;

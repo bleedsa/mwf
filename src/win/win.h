@@ -4,8 +4,8 @@
 #include <u.h>
 
 namespace win {
-	I open();
-	I main();
+	I open(C *ip);
+	I main(C *ip);
 
 	/* win state */
 	enum WinT {
@@ -15,14 +15,14 @@ namespace win {
 
 	extern WinT WIN_T;
 
-	sta I (*WIN_FS[])() = {
+	sta I (*WIN_FS[])(C*) = {
 		[WIN_OPEN]=open,
 		[WIN_MAIN]=main,
 	};
 
-	inl sta X this_win() -> I {
-		I (*f)() = WIN_FS[WIN_T];
-		return f();
+	inl sta X this_win(C *ip) -> I {
+		I (*f)(C*) = WIN_FS[WIN_T];
+		return f(ip);
 	}
 }
 

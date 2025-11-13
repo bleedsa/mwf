@@ -5,6 +5,7 @@
 #include <string.h>
 
 sta S CLI_ID = 0;
+sta S MAX_PEERS = 150;
 
 inl X new_cli_id() -> S {
 	return CLI_ID++;
@@ -24,7 +25,7 @@ X Net::init() -> I {
 Net::Srv::Srv(CC *a, I p) {
 	enet_address_set_host(&addr, a);
 	addr.port = p;
-	srv = enet_host_create(&addr, 32, 2, 0, 0);
+	srv = enet_host_create(&addr, MAX_PEERS, 2, 0, 0);
 
 	if (srv == nullptr) {
 		fatal("Cannot make enet host?? %s:%d", a, p);

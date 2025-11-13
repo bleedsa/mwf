@@ -22,7 +22,7 @@ namespace Map {
 		inl Tile() : ty{EMPTY} {}
 		inl Tile(TileTy ty) : ty{ty} {}
 
-		msgpack::sbuffer pack();
+		V pack(msgpack::sbuffer &buf);
 	};
 
 	/* a game map */
@@ -35,6 +35,8 @@ namespace Map {
 		inl X at(S x, S y) -> Tile* {
 			return tiles.at(x, y);
 		}
+
+		V pack(msgpack::sbuffer &buf);
 	};
 }
 

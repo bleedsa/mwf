@@ -1,5 +1,12 @@
+#include <msgpack.hpp>
+#include <mutex>
+#include <thread>
+
 #include <u.h>
 #include <net.h>
+#include <map.h>
+
+X MAP = Map::Map(460, 480);
 
 X main(I argc, C **argv) -> I {
 	U::init();
@@ -27,7 +34,6 @@ X main(I argc, C **argv) -> I {
 				break;
 
 			case ENET_EVENT_TYPE_RECEIVE:
-				X msg = "hello world";
 				log_(
 					"packet {L:%zu,D:%s,from:%s,chan:%u}",
 					ev.packet->dataLength,
@@ -35,8 +41,12 @@ X main(I argc, C **argv) -> I {
 					(C*)ev.peer->data,
 					ev.channelID
 				);
+				/*
+				msgpack::sbuffer buf;
+				MAP.pack(buf);
+				*/
 				enet_packet_destroy(ev.packet);
-				srv.send_packet(ev.peer, (u8*)msg, strlen(msg)+1);
+
 				break;
 			}
 		}

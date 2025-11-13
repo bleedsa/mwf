@@ -11,10 +11,10 @@ namespace gfx {
 	V close();
 
 	template<typename F>
-	inl X window(F f) -> V {
+	inl X window(F f, C *ip) -> V {
 		while (!WindowShouldClose()) {
 			BeginDrawing(); {
-				f();
+				f(ip);
 			}; EndDrawing();
 		}
 		close();

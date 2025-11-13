@@ -47,7 +47,6 @@ bldcxx:{cxx[objof x;,x]}
 
 outd:,[`dep]!,"$out.d"
 
-
 / flags
 `0:"cc = ",cfg`cc
 `0:"cxx = ",cfg`cxx
@@ -71,7 +70,7 @@ outd:,[`dep]!,"$out.d"
 
 / phony
 `0:rule["run";"$in"]
-`0:bld["run";"run";,exeof"trhs"]
+`0:bld["run";"run";,exe:exeof cfg`name]
 
 / objs
 `0:"\n"/bldcxx'libcpp
@@ -81,6 +80,6 @@ outd:,[`dep]!,"$out.d"
 / out
 libout:libof cfg`name
 `0:bld["ar";libout;objof'libcpp]
-`0:lnk[exeof cfg`name;(" "/objof'win;objof"src/0.cpp";libout;ENET;RAY)]
-`0:lnk[srv:exeof ,[cfg`name;"srv"];(objof"src/srv.cpp";libout;ENET;RAY)]
-`0:"default "," "/(RAY;libout;exeof cfg`name;srv);
+`0:lnk[exe;(" "/objof'win;objof"src/0.cpp";libout;ENET;RAY)]
+`0:lnk[srv:exeof "srv";(objof"src/srv.cpp";libout;ENET;RAY)]
+`0:"default "," "/(RAY;libout;exe;srv);

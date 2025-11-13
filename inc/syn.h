@@ -1,8 +1,7 @@
-#ifndef __MWF_SYNC_H__
-#define __MWF_SYNC_H__
+#ifndef __MWF_SYN_H__
+#define __MWF_SYN_H__
 
 #include <future>
-#include <cstdarg>
 
 #include <u.h>
 

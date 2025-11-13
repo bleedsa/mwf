@@ -11,9 +11,9 @@ X MAP = Map::Map(460, 480);
 X main(I argc, C **argv) -> I {
 	U::init();
 
-	X srv = Net::Srv("0.0.0.0", 6061);
+	X srv = Net::Srv("127.0.0.1", 6065);
 
-	while (true) {
+	for (;;) {
 		ENetEvent ev;
 		while (enet_host_service(srv.srv, &ev, 1000) > 0) {
 			switch (ev.type) {

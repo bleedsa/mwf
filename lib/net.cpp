@@ -5,7 +5,7 @@
 #include <string.h>
 
 sta S CLI_ID = 0;
-sta S MAX_PEERS = 150;
+sta S MAX_PEERS = 128;
 
 inl X new_cli_id() -> S {
 	return CLI_ID++;
@@ -16,8 +16,6 @@ X Net::init() -> I {
 		elog("failed to initialize enet.");
 		return e;
 	}
-
-//	atexit(enet_deinitialize);
 
 	return 0;
 }
@@ -40,6 +38,7 @@ Net::Cli::Cli(C *a, I p) {
 	S aL = strlen(a);
 	ENetEvent e;
 
+	/* set the host and then put it back */
 	enet_address_set_host(&addr, a);
 	enet_address_get_host(&addr, a, aL);
 	addr.port = p;

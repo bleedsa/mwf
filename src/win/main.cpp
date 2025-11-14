@@ -4,8 +4,6 @@
 
 #include "win.h"
 
-X win::main(C *ip) -> I {
-	ClearBackground(WHITE);
-
+X win::main() -> I {
 	return 0;
 }

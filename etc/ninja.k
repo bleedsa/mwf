@@ -22,7 +22,7 @@ cfg,:(!).,'(`cflags;    " "/($[~cfg`rel;"-g -DDBG=1";""]
                              "-Wall -Wextra -Wno-unused-parameter"
                              "-Wno-unused-variable -Wno-unused-function"
                              "-Wno-enum-enum-conversion"
-                             "-I3rd/raylib/include/ -Io/include"))
+                             "-Io/include"))
 cfg,:(!).,'(`cxxflags;  " "/(cfg`cflags
                              "-Iinc -I3rd/msgpack/include"
                              "-Wno-c99-designator"
@@ -63,10 +63,10 @@ outd:,[`dep]!,"$out.d"
 `0:rule["ar";"ar rcs $out $in"]
 
 / 3rd
-`0:rule["ray";"etc/mk/ray.sh"]
-`0:bld["ray";RAY:"3rd/raylib/build/raylib/libraylib.a";""]
 `0:rule["enet";"etc/mk/enet.sh"]
 `0:bld["enet";ENET:"o/lib/libenet.a";""]
+`0:rule["sdl";"etc/mk/sdl.sh"]
+`0:bld["sdl";SDL:"o/lib/libSDL3.a";""]
 
 / phony
 `0:rule["run";"$in"]
@@ -80,6 +80,6 @@ outd:,[`dep]!,"$out.d"
 / out
 libout:libof cfg`name
 `0:bld["ar";libout;objof'libcpp]
-`0:lnk[exe;(" "/objof'win;objof"src/0.cpp";libout;ENET;RAY)]
-`0:lnk[srv:exeof "srv";(objof"src/srv.cpp";libout;ENET;RAY)]
-`0:"default "," "/(RAY;libout;exe;srv);
+`0:lnk[exe;(" "/objof'win;objof"src/0.cpp";libout;ENET;SDL)]
+`0:lnk[srv:exeof "srv";(objof"src/srv.cpp";libout;ENET)]
+`0:"default "," "/(SDL;libout;exe;srv);

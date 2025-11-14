@@ -2,9 +2,11 @@
 #include <raylib.h>
 #include "win.h"
 
-X win::open(C *ip) -> I {
-	ClearBackground(RAYWHITE);
+std::mutex win::WIN_X;
+
+X win::open() -> I {
 	log_("win::open()");
+	X G = std::lock_guard<std::mutex>(win::WIN_X);
 	win::WIN_T = WIN_MAIN;
 	return 0;
 }

@@ -2,7 +2,8 @@
 #define __TRHS_GFX_H__
 
 #include <mutex>
-#include <SDL3/SDL_init.h>
+#include <vector>
+#include <SDL3/SDL.h>
 
 #include <u.h>
 #include <vec.h>
@@ -25,8 +26,28 @@ namespace gfx {
 		}
 	}
 
+	namespace win {
+		extern SDL_Window *WIN;
+		extern SDL_Renderer *REN;
+		extern I W, H;
+		extern std::mutex WIN_X;
+	}
+
+	struct Texs {
+		std::vector<SDL_Texture*> texs;
+
+		inl Texs() : texs{std::vector<SDL_Texture*>()} {}
+		inl Texs(con Texs &x) : texs{x.texs} {}
+		inl ~Texs() {
+			for (S i = 0; i < texs.size(); i++) {
+				SDL_DestroyTexture(texs[i]);
+			}
+		}
+	};
+
 	I init(CC *n);
 	V close(int);
+	V close();
 
 	template<typename F>
 	inl X window(F f) -> V {

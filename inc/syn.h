@@ -7,7 +7,7 @@
 
 namespace syn {
 	template<typename F=V, typename... Ts>
-	inl X launch(X... args) -> std::future<F> {
+	inl X async(X... args) -> std::future<F> {
 		return std::async(std::launch::async, args...);
 	}
 }

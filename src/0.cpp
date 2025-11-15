@@ -46,9 +46,9 @@ X main(I argc, C **argv) -> I {
 	U::init(argv[0]);
 	get_map(argv[1]);
 
-	X t0 = syn::launch(Ev::process);
-	X t1 = syn::launch<I>(window);
-	X t2 = syn::launch<I>([](C *ip){
+	X t0 = syn::async(Ev::process);
+	X t1 = syn::async<I>(window);
+	X t2 = syn::async<I>([](C *ip){
 		while (gfx::OPEN) get_map(ip);
 		return 0;
 	}, argv[1]);

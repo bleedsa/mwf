@@ -13,6 +13,7 @@
 #define fatal(f...){fprintf(stderr,"[FATAL] " f);putc('\n',stdout);exit(-1);}
 #define log_(f...){printf("[LOG] " f);putc('\n',stdout);}
 #define elog(f...){fprintf(stderr, "[ERR] " f);putc('\n',stdout);}
+#define CASE(f,x...)case f: {x;break;}
 
 /* llvm */
 using u8=uint8_t;

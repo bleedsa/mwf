@@ -81,5 +81,5 @@ outd:,[`dep]!,"$out.d"
 libout:libof cfg`name
 `0:bld["ar";libout;objof'libcpp]
 `0:lnk[exe;(" "/objof'win;objof"src/0.cpp";libout;ENET;SDL)]
-`0:lnk[srv:exeof "srv";(objof"src/srv.cpp";libout;ENET)]
+`0:lnk[srv:exeof "srv";(objof"src/srv.cpp";libout;ENET;SDL)]
 `0:"default "," "/(SDL;libout;exe;srv);

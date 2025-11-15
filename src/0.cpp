@@ -1,6 +1,7 @@
 #include <cstring>
 #include <thread>
 #include <mutex>
+#include <csignal>
 
 #include <u.h>
 #include <gfx.h>
@@ -8,6 +9,7 @@
 #include <net.h>
 #include <map.h>
 #include <syn.h>
+#include <ev.h>
 #include "win/win.h"
 
 Map::Map MAP(200, 200);
@@ -27,7 +29,11 @@ X get_map(C *ip) -> I {
 
 X window() -> I {
 	gfx::window(win::this_win);
-	gfx::close();
+	return 0;
+}
+
+X events() -> I {
+	Ev::process();
 	return 0;
 }
 
@@ -36,12 +42,14 @@ X main(I argc, C **argv) -> I {
 	u8 *D = nullptr;
 
 	if (argc < 2) fatal("usage: %s [ip]", argv[0]);
+	std::signal(SIGINT, gfx::close);
 	U::init(argv[0]);
 	get_map(argv[1]);
 
+	X t0 = syn::launch(Ev::process);
 	X t1 = syn::launch<I>(window);
 	X t2 = syn::launch<I>([](C *ip){
-		for (;;) get_map(ip);
+		while (gfx::OPEN) get_map(ip);
 		return 0;
 	}, argv[1]);
 

@@ -1,4 +1,5 @@
 #include <enet/enet.h>
+
 #include <u.h>
 #include <gfx.h>
 #include <net.h>

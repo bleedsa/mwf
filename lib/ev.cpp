@@ -6,6 +6,7 @@
 #include <gfx.h>
 
 inl X process_keys() -> V {
+	SDL_PumpEvents();
 	X keys = SDL_GetKeyboardState(nullptr);
 	if (keys[SDL_SCANCODE_ESCAPE]) gfx::close();
 }

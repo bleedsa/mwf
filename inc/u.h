@@ -5,15 +5,19 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <ctype.h>
+#include <mutex>
+#include <format>
+#include <iostream>
 
 #define Z(x)(sizeof(x))
 #define mv(x...)(std::move(x))
 #define MMV(x,y,z)(memmove(x,y,z))
 #define streq(x,y)(0==strcmp((x),(y)))
 #define fatal(f...){fprintf(stderr,"[FATAL] " f);putc('\n',stdout);exit(-1);}
-#define log_(f...){printf("[LOG] " f);putc('\n',stdout);}
-#define elog(f...){fprintf(stderr, "[ERR] " f);putc('\n',stdout);}
+#define log_(f...){std::string _x=std::format("[LOG] " f);std::cout<<_x<<'\n';}
+#define elog(f...){std::string _x=std::format("[ERR] " f);std::cout<<_x<<'\n';}
 #define CASE(f,x...)case f: {x;break;}
+#define X_G(x)(std::lock_guard<std::mutex>(x))
 
 /* llvm */
 using u8=uint8_t;

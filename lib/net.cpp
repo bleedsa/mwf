@@ -26,7 +26,7 @@ Net::Srv::Srv(CC *a, I p) {
 	srv = enet_host_create(&addr, MAX_PEERS, 2, 0, 0);
 
 	if (srv == nullptr) {
-		fatal("Cannot make enet host?? %s:%d", a, p);
+		fatal("Cannot make enet host?? {}:{}", a, p);
 	}
 }
 
@@ -53,10 +53,9 @@ Net::Cli::Cli(C *a, I p) {
 		enet_host_service(cli, &e, 5000) > 0
 		&& e.type == ENET_EVENT_TYPE_CONNECT
 	) {
-		log_("connection to %s:%d succeeded", a, p);
 	} else {
 		enet_peer_reset(peer);
-		elog("failed to connect to %s:%d", a, p);
+		elog("failed to connect to {}:{}", a, p);
 	}
 }
 

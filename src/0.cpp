@@ -20,7 +20,7 @@ X get_map(C *ip) -> I {
 	X opt = cli.recv_packet();
 	if (opt.has_value()) {
 		X [L, D] = opt.value();
-		X G = std::lock_guard<std::mutex>(MAP_X);
+		X G = X_G(MAP_X);
 		return 0;
 	} else {
 		return 1;

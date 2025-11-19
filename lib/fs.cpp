@@ -15,7 +15,7 @@ X fs::bmp_files(std::string d) -> std::vector<std::string> {
 		X p = i.path();
 		if (p.extension() == std::fs::path(".bmp")) {
 			r.push_back(p);
-			log_("loaded {}", p.c_str());
+			log_("loaded \x1b[35m{}\x1b[0m", p.c_str());
 		}
 	}
 	return r;

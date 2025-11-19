@@ -22,7 +22,7 @@ X main(I argc, C **argv) -> I {
 
 			case ENET_EVENT_TYPE_CONNECT:
 				log_(
-					"new client from {:#16X}:{}",
+					"new client \x1b[33m[{:#10x}:{}]\x1b[0m",
 					ev.peer->address.host,
 					ev.peer->address.port
 				   );

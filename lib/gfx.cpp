@@ -16,10 +16,10 @@ std::mutex gfx::mouse::POS_X;
 
 SDL_Window *gfx::win::WIN;
 SDL_Renderer *gfx::win::REN;
-std::mutex gfx::win::WIN_X;
-
 I gfx::win::W = 640;
 I gfx::win::H = 480;
+CC *gfx::win::TITLE = "mob with friends!";
+std::mutex gfx::win::WIN_X;
 
 gfx::Texs gfx::TEXS;
 std::mutex gfx::TEXS_X;
@@ -28,8 +28,14 @@ X gfx::init(CC *n) -> I {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
 	X G = std::lock_guard<std::mutex>(win::WIN_X);
-	win::WIN = SDL_CreateWindow(n, win::W, win::H, 0);
-	win::REN = SDL_CreateRenderer(win::WIN, nullptr);
+	if (!SDL_CreateWindowAndRenderer(
+		win::TITLE,
+		win::W, win::H,
+		SDL_LOGICAL_PRESENTATION_LETTERBOX,
+		&win::WIN, &win::REN
+	)) {
+		return -1;
+	}
 
 	return 0;
 }
@@ -61,6 +67,16 @@ X gfx::Texs::load_bmp_dir(std::string p) -> std::optional<std::string> {
 		texs.push_back(txt);
 		paths.push_back(i);
 	}
+
+	return {};
+}
+
+X gfx::clear(F r, F g, F b) -> std::optional<std::string> {
+	X G = X_G(win::WIN_X);
+
+	SDL_SetRenderDrawColorFloat(win::REN, r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
+	SDL_RenderClear(win::REN);
+	SDL_RenderPresent(win::REN);
 
 	return {};
 }

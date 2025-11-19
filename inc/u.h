@@ -13,11 +13,21 @@
 #define mv(x...)(std::move(x))
 #define MMV(x,y,z)(memmove(x,y,z))
 #define streq(x,y)(0==strcmp((x),(y)))
-#define fatal(f...){fprintf(stderr,"[FATAL] " f);putc('\n',stdout);exit(-1);}
-#define log_(f...){std::string _x=std::format("[LOG] " f);std::cout<<_x<<'\n';}
-#define elog(f...){std::string _x=std::format("[ERR] " f);std::cout<<_x<<'\n';}
 #define CASE(f,x...)case f: {x;break;}
 #define X_G(x)(std::lock_guard<std::mutex>(x))
+
+#define fatal(f...){ \
+	std::string _x=std::format("\x1b[31m[FATAL]\x1b[0m " f); \
+	std::cout<<_x<<std::endl; \
+}
+#define log_(f...){ \
+	std::string _x=std::format("\x1b[36m[LOG]\x1b[0m " f); \
+	std::cout<<_x<<std::endl; \
+}
+#define elog(f...){ \
+	std::string _x=std::format("\x1b[31m[ERR]\x1b[0m " f); \
+	std::cout<<_x<<std::endl; \
+}
 
 /* llvm */
 using u8=uint8_t;

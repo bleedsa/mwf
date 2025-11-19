@@ -32,6 +32,7 @@ namespace gfx {
 		extern SDL_Window *WIN;
 		extern SDL_Renderer *REN;
 		extern I W, H;
+		extern CC *TITLE;
 		extern std::mutex WIN_X;
 	}
 
@@ -47,7 +48,8 @@ namespace gfx {
 			, paths{std::vector<std::string>()}
 		{
 			#define BMP(x)({ \
-				log_("loading {}", x);load_bmp_dir(x); \
+				log_("loading \x1b[35m{}\x1b[0m", x); \
+				load_bmp_dir(x); \
 			})
 			X bmp = BMP("ref/sprites/bmp/");
 			if (bmp.has_value()) {
@@ -90,6 +92,7 @@ namespace gfx {
 	I init(CC *n);
 	V close(int);
 	V close();
+	std::optional<std::string> clear(F r, F g, F b);
 
 	template<typename F>
 	inl X window(F f) -> V {

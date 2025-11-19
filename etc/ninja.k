@@ -24,7 +24,7 @@ cfg,:(!).,'(`cflags;    " "/($[~cfg`rel;"-g -DDBG=1";""]
                              "-Wno-enum-enum-conversion"
                              "-Io/include"))
 cfg,:(!).,'(`cxxflags;  " "/(cfg`cflags
-                             "-Iinc -I3rd/msgpack/include"
+                             "-Iinc"
                              "-Wno-c99-designator"
                              "-std=gnu++2b"))
 cfg,:(!).,'(`lnkxxflags;" "/(cfg`cxxflags;""))
@@ -64,9 +64,9 @@ outd:,[`dep]!,"$out.d"
 
 / 3rd
 `0:rule["enet";"etc/mk/enet.sh"]
-`0:bld["enet";ENET:"o/lib/libenet.a";""]
+`0:bld["enet";ENET:"o/lib64/libenet.a";""]
 `0:rule["sdl";"etc/mk/sdl.sh"]
-`0:bld["sdl";SDL:"o/lib/libSDL3.a";""]
+`0:bld["sdl";SDL:"o/lib64/libSDL3.a";""]
 
 / phony
 `0:rule["run";"$in"]

@@ -5,3 +5,7 @@
 	path = 3rd/sdl3
 	url = https://github.com/libsdl-org/SDL
 	branch = release-3.2.x
+[submodule "3rd/msgpack"]
+	path = 3rd/msgpack
+	url = https://github.com/msgpack/msgpack-c
+	branch = cpp_master

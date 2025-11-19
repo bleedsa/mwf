@@ -1,5 +1,4 @@
 #include <u.h>
-#include <raylib.h>
 #include "win.h"
 
 std::mutex win::WIN_X;

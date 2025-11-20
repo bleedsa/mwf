@@ -2,6 +2,7 @@
 #include <thread>
 #include <mutex>
 #include <csignal>
+#include <msgpack.hpp>
 
 #include <u.h>
 #include <gfx.h>

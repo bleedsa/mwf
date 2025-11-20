@@ -31,7 +31,7 @@ X gfx::init(CC *n) -> bool {
 	if (!SDL_CreateWindowAndRenderer(
 		win::TITLE,
 		win::W, win::H,
-		SDL_LOGICAL_PRESENTATION_LETTERBOX,
+		SDL_WINDOW_HIDDEN,
 		&win::WIN, &win::REN
 	)) {
 		elog("SDL_CreateWindowAndRenderer: {}", SDL_GetError());
@@ -39,7 +39,7 @@ X gfx::init(CC *n) -> bool {
 	}
 
 	if (!win::WIN || !win::REN) {
-		elog("win::WIN or win::REN==nullptr");
+		elog("win::WIN==nullptr||win::REN==nullptr");
 		return false;
 	}
 
@@ -47,8 +47,8 @@ X gfx::init(CC *n) -> bool {
 }
 
 X gfx::close() -> V {
-	OPEN = false;
 	X G = X_G(win::WIN_X);
+	OPEN = false;
 	SDL_DestroyRenderer(win::REN);
 	SDL_DestroyWindow(win::WIN);
 	SDL_Quit();
@@ -85,7 +85,7 @@ X gfx::clear(u8 r, u8 g, u8 b) -> std::optional<std::string> {
 	X clr = SDL_RenderClear(win::REN);
 	if (!clr) {
 		return std::optional<std::string>{
-			std::format("err clearing win::REN {}", SDL_GetError())
+			std::format("err clearing win::REN: {}", SDL_GetError())
 		};
 	}
 

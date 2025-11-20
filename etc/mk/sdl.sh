@@ -5,5 +5,5 @@ cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release -DSDL_STATIC=ON \
 	-DCMAKE_POSITION_INDEPENDENT_CODE=ON
 cmake --build build --config Release
 cmake --install build --prefix ../../o/
-ln -s ../../o/{lib64/libSDL3.a,lib/libSDL3.a}
+ln -s ../../o/lib64/libSDL3.a ../../o/lib/libSDL3.a
 echo done

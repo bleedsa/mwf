@@ -1,6 +1,8 @@
 #ifndef __PLUG_U_H__
 #define __PLUG_U_H__
 
+#include <sf.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

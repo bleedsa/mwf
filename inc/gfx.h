@@ -5,7 +5,7 @@
 #include <vector>
 #include <optional>
 #include <string>
-#include <SDL3/SDL.h>
+#include <SFML/Graphics.hpp>
 
 #include <u.h>
 #include <vec.h>
@@ -31,65 +31,11 @@ namespace gfx {
 	}
 
 	namespace win {
-		extern SDL_Window *WIN;
-		extern SDL_Renderer *REN;
+		extern sf::RenderWindow WIN;
 		extern I W, H;
 		extern CC *TITLE;
 		extern std::mutex WIN_X;
 	}
-
-	struct Texs {
-		std::vector<SDL_Texture*> texs;
-		std::vector<std::string> paths;
-
-		std::optional<std::string> load_png_dir(std::string);
-		std::optional<std::string> load_bmp_dir(std::string);
-
-		inl Texs()
-			: texs{std::vector<SDL_Texture*>()}
-			, paths{std::vector<std::string>()}
-		{
-			#define BMP(x)({ \
-				log_("loading \x1b[35m{}\x1b[0m", x); \
-				load_bmp_dir(x); \
-			})
-			X bmp = BMP("ref/sprites/bmp/");
-			if (bmp.has_value()) {
-				elog(
-					"error while loading bmp sprites {}",
-					bmp.value()
-				);
-			}
-		}
-
-		inl Texs(con Texs &x) : texs{x.texs}, paths{x.paths} {}
-		inl ~Texs() {
-			for (S i = 0; i < texs.size(); i++) {
-				SDL_DestroyTexture(texs[i]);
-			}
-		}
-
-		inl X find(std::string x) -> std::optional<S> {
-			S i = 0;
-			for (X &p : paths) {
-				if (p == x) {
-					return i;
-				}
-				i++;
-			}
-			return {};
-		}
-
-		inl X get(std::string x) -> std::optional<SDL_Texture*> {
-			X f = find(x);
-			return f
-				? std::optional<SDL_Texture*>(texs[*f])
-				: std::nullopt;
-		}
-	};
-
-	extern Texs TEXS;
-	extern std::mutex TEXS_X;
 
 	bool init(CC *n);
 	V close(int);

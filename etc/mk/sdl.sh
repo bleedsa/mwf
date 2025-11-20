@@ -1,9 +1,0 @@
-#!/bin/sh
-
-cd 3rd/sdl3/
-cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release -DSDL_STATIC=ON \
-	-DCMAKE_POSITION_INDEPENDENT_CODE=ON
-cmake --build build --config Release
-cmake --install build --prefix ../../o/
-ln -s ../../o/lib64/libSDL3.a ../../o/lib/libSDL3.a
-echo done

@@ -5,10 +5,7 @@
 #include "win.h"
 
 X win::main() -> I {
-	log_("clear");
-	X clr = gfx::clear(0xff, 0xff, 0xff);
-	if (!!clr) {
-		elog("{}", *clr);
-	}
+	X G = X_G(gfx::win::WIN_X);
+
 	return 0;
 }

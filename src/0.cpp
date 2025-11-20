@@ -3,6 +3,7 @@
 #include <mutex>
 #include <csignal>
 #include <msgpack.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <u.h>
 #include <gfx.h>

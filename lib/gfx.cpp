@@ -8,8 +8,8 @@
 
 S gfx::W = 640;
 S gfx::H = 480;
-
 bool gfx::OPEN = true;
+std::mutex gfx::SDL_X;
 
 Vec2 gfx::mouse::POS = Vec2(0.0, 0.0);
 std::mutex gfx::mouse::POS_X;
@@ -24,27 +24,33 @@ std::mutex gfx::win::WIN_X;
 gfx::Texs gfx::TEXS;
 std::mutex gfx::TEXS_X;
 
-X gfx::init(CC *n) -> I {
+X gfx::init(CC *n) -> bool {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
-	X G = std::lock_guard<std::mutex>(win::WIN_X);
+	X G = X_G(win::WIN_X);
 	if (!SDL_CreateWindowAndRenderer(
 		win::TITLE,
 		win::W, win::H,
 		SDL_LOGICAL_PRESENTATION_LETTERBOX,
 		&win::WIN, &win::REN
 	)) {
-		return -1;
+		elog("SDL_CreateWindowAndRenderer: {}", SDL_GetError());
+		return false;
 	}
 
-	return 0;
+	if (!win::WIN || !win::REN) {
+		elog("win::WIN or win::REN==nullptr");
+		return false;
+	}
+
+	return true;
 }
 
 X gfx::close() -> V {
 	OPEN = false;
-	X G = std::lock_guard<std::mutex>(win::WIN_X);
-	SDL_DestroyWindow(win::WIN);
+	X G = X_G(win::WIN_X);
 	SDL_DestroyRenderer(win::REN);
+	SDL_DestroyWindow(win::WIN);
 	SDL_Quit();
 }
 
@@ -60,7 +66,7 @@ X gfx::Texs::load_bmp_dir(std::string p) -> std::optional<std::string> {
 			return std::format("failed to load bmp file {}", i);
 		}
 
-		X G = std::lock_guard<std::mutex>(win::WIN_X);
+		X G = X_G(win::WIN_X);
 		X txt = SDL_CreateTextureFromSurface(win::REN, bmp);
 		SDL_DestroySurface(bmp);
 
@@ -71,11 +77,18 @@ X gfx::Texs::load_bmp_dir(std::string p) -> std::optional<std::string> {
 	return {};
 }
 
-X gfx::clear(F r, F g, F b) -> std::optional<std::string> {
+X gfx::clear(u8 r, u8 g, u8 b) -> std::optional<std::string> {
 	X G = X_G(win::WIN_X);
 
-	SDL_SetRenderDrawColorFloat(win::REN, r, g, b, SDL_ALPHA_OPAQUE_FLOAT);
-	SDL_RenderClear(win::REN);
+	SDL_SetRenderDrawColor(win::REN, r, g, b, 0xaa);
+
+	X clr = SDL_RenderClear(win::REN);
+	if (!clr) {
+		return std::optional<std::string>{
+			std::format("err clearing win::REN {}", SDL_GetError())
+		};
+	}
+
 	SDL_RenderPresent(win::REN);
 
 	return {};

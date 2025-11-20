@@ -4,10 +4,10 @@
 #include <gfx.h>
 #include <net.h>
 
-X U::init(CC *n) -> I {
-	return (gfx::init(n) != 0) && (Net::init() != 0);
+X U::init(CC *n) -> bool {
+	return gfx::init(n) && Net::init();
 }
 
-X U::init() -> I {
+X U::init() -> bool {
 	return Net::init();
 }

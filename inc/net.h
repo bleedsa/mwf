@@ -9,7 +9,7 @@
 #include <enet/enet.h>
 
 namespace Net {
-	I init();
+	bool init();
 
 	struct Srv {
 		ENetAddress addr;

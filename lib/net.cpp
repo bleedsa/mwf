@@ -11,13 +11,13 @@ inl X new_cli_id() -> S {
 	return CLI_ID++;
 }
 
-X Net::init() -> I {
+X Net::init() -> bool {
 	if (I e = enet_initialize() != 0) {
 		elog("failed to initialize enet.");
-		return e;
+		return false;
 	}
 
-	return 0;
+	return true;
 }
 
 Net::Srv::Srv(CC *a, I p) {

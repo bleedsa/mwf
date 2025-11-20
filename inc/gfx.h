@@ -13,6 +13,8 @@
 namespace gfx {
 	extern S W, H;
 	extern bool OPEN;
+	extern std::mutex SDL_X;
+	
 	namespace mouse {
 		extern Vec2 POS;
 		extern std::mutex POS_X;
@@ -89,10 +91,10 @@ namespace gfx {
 	extern Texs TEXS;
 	extern std::mutex TEXS_X;
 
-	I init(CC *n);
+	bool init(CC *n);
 	V close(int);
 	V close();
-	std::optional<std::string> clear(F r, F g, F b);
+	std::optional<std::string> clear(u8 r, u8 g, u8 b);
 
 	template<typename F>
 	inl X window(F f) -> V {

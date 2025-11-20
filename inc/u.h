@@ -19,6 +19,7 @@
 #define fatal(f...){ \
 	std::string _x=std::format("\x1b[31m[FATAL]\x1b[0m " f); \
 	std::cout<<_x<<std::endl; \
+	exit(-1); \
 }
 #define log_(f...){ \
 	std::string _x=std::format("\x1b[36m[LOG]\x1b[0m " f); \
@@ -52,8 +53,8 @@ using CC=const char;
 using S=size_t;
 
 namespace U {
-	I init(CC *n);
-	I init();
+	bool init(CC *n);
+	bool init();
 }
 
 #endif

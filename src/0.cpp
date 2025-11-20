@@ -19,8 +19,8 @@ std::mutex MAP_X;
 X get_map(C *ip) -> I {
 	X cli = Net::Cli(ip, 6065);
 	X opt = cli.recv_packet();
-	if (opt.has_value()) {
-		X [L, D] = opt.value();
+	if (opt) {
+		X [L, D] = *opt;
 		X G = X_G(MAP_X);
 		return 0;
 	} else {
@@ -44,12 +44,15 @@ X main(I argc, C **argv) -> I {
 
 	if (argc < 2) fatal("usage: %s [ip]", argv[0]);
 	std::signal(SIGINT, gfx::close);
-	U::init(argv[0]);
+	if (!U::init(gfx::win::TITLE)) {
+		fatal("failed to init SDL");
+	}
 	get_map(argv[1]);
 
 	X t0 = syn::async(Ev::process);
 	X t1 = syn::async<I>(window);
 	X t2 = syn::async<I>([](C *ip){
+		X G = X_G(gfx::SDL_X);
 		while (gfx::OPEN) get_map(ip);
 		return 0;
 	}, argv[1]);

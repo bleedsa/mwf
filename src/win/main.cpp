@@ -6,10 +6,9 @@
 
 X win::main() -> I {
 	log_("clear");
-	X clr = gfx::clear(1.0, 1.0, 1.0);
-	if (!clr) {
-		elog("{}", clr.value());
-		return -1;
+	X clr = gfx::clear(0xff, 0xff, 0xff);
+	if (!!clr) {
+		elog("{}", *clr);
 	}
 	return 0;
 }
